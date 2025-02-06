@@ -33,7 +33,9 @@ export class AuthService {
     const user = this.userRepository.create(signUpDto);
     await this.userRepository.save(user);
 
-    const jwt = await this.jwtService.generateJwt(user.id.toString());
+    const jwt = await this.jwtService.generateJwt(
+      user.id,
+    );
     delete user.password;
 
     return { user, accessToken: jwt };
@@ -57,7 +59,9 @@ export class AuthService {
       throw new BadRequestException(ERROR_MESSAGES.INVALID_CREDENTIALS);
     }
 
-    const jwt = await this.jwtService.generateJwt(user.id.toString());
+    const jwt = await this.jwtService.generateJwt(
+      user.id,
+    );
 
     return { user, accessToken: jwt };
   }

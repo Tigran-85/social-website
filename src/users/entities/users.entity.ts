@@ -1,4 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert, BeforeUpdate } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BeforeInsert,
+  BeforeUpdate,
+  ManyToMany,
+  JoinTable,
+} from 'typeorm';
 import * as bcrypt from 'bcrypt';
 
 @Entity()
@@ -12,11 +20,26 @@ export class User {
   @Column({ type: 'varchar', length: 255, nullable: false })
   lastName: string;
 
+  @Column({ type: 'integer', nullable: true })
+  age: number;
+
   @Column({ type: 'varchar', length: 255, nullable: false, unique: true })
   email: string;
 
   @Column({ type: 'varchar', length: 255, nullable: false })
   password: string;
+
+  @ManyToMany(() => User, (user) => user.friends)
+  @JoinTable({ name: 'friends' })
+  friends: User[];
+
+  @ManyToMany(() => User, (user) => user.sentRequests)
+  @JoinTable({ name: 'friend_requests' })
+  sentRequests: User[];
+
+  @ManyToMany(() => User, (user) => user.receivedRequests)
+  @JoinTable({ name: 'received_requests' })
+  receivedRequests: User[];
 
   @BeforeInsert()
   @BeforeUpdate()

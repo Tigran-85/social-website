@@ -19,9 +19,8 @@ export class JWTService {
     return bcrypt.hash(password, salt);
   }
 
-  async generateJwt(credentialKey: string): Promise<string> {
-    const payload: JwtPayload  = { credentialKey };
-
+  async generateJwt(userId: number): Promise<string> {
+    const payload: JwtPayload = { userId };
     return this.jwtService.sign(payload);
   }
 

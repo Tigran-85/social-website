@@ -1,9 +1,9 @@
 export interface JwtPayload {
-  credentialKey: string;
+  userId: number;
 }
 export interface JwtResponse {
-  id: string;
-  email: string;
+  id: number;
+  role: string;
   iat: number;
   exp: number;
 }

@@ -5,17 +5,20 @@ export const RESPONSE_MESSAGES = {
   DELETED: 'Deleted successfully',
   UPDATED: 'Updated successfully',
   VERIFIED: 'Verified successfully',
+  FRIEND_REQUEST_SENT: 'Friend request sent',
+  REQUEST_ACCEPTED: 'Friend request accepted',
+  REQUEST_DECLINED: 'Friend request declined',
 };
 
 export const ERROR_MESSAGES = {
   USER_EXIST: 'User already exists',
   USER_NOT_FOUND: 'User not found',
-  BOOK_EXISTS: 'Book already exists',
-  BOOK_NOT_FOUND: 'Book not found',
-  AUTHOR_EXISTS: 'Author already exists',
-  AUTHOR_NOT_FOUND: 'Author not found',
+  FRIEND_NOT_FOUND: 'Friend not found',
   USER_EMAIL_EXISTS: 'User with this email already exists',
-  USER_DOES_NOT_EXIST: "User doesn't exist",
+  USER_DOES_NOT_EXIST: 'User does not exist',
+  REQUEST_NOT_FOUND: 'Request not found',
+  REQUEST_ALREADY_SENT: 'Request already sent',
+  CANNOT_ADD_YOURSELF: 'You cannot add yourself as a friend',
   INVALID_EMAIL: 'Invalid email address',
   WEAK_PASSWORD: 'Password is too weak',
   SOMETHING_WENT_WRONG: 'Something went wrong',
@@ -24,7 +27,6 @@ export const ERROR_MESSAGES = {
   TOKEN_EXPIRED: 'Token expired',
   UNAUTHORIZED_USER: 'Unauthorized user',
   INVALID_TOKEN: 'Invalid token',
-  INVALID_OLD_PASSWORD: 'Your old password was typed incorrectly',
   NOT_ALLOWED: 'Not allowed',
 };
 
