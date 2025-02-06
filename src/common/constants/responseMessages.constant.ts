@@ -19,6 +19,7 @@ export const ERROR_MESSAGES = {
   REQUEST_NOT_FOUND: 'Request not found',
   REQUEST_ALREADY_SENT: 'Request already sent',
   CANNOT_ADD_YOURSELF: 'You cannot add yourself as a friend',
+  ALREADY_FRIEND: 'You are already friends with this user',
   INVALID_EMAIL: 'Invalid email address',
   WEAK_PASSWORD: 'Password is too weak',
   SOMETHING_WENT_WRONG: 'Something went wrong',

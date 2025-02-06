@@ -52,7 +52,8 @@ export class UsersController {
   @UseGuards(AuthGuard)
   @Post('decline-request/:senderId')
   async declineFriendRequest(@Request() req, @Param('senderId') senderId: number) {
-    return this.usersService.declineFriendRequest(req.user.id, senderId);
+    const userId = req.user.userId;
+    return this.usersService.declineFriendRequest(userId, senderId);
   }
 
   @UseGuards(AuthGuard)

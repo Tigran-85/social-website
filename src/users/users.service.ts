@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  ConflictException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -42,7 +43,7 @@ export class UsersService {
 
     const sender = await this.userRepository.findOne({
       where: { id: senderId },
-      relations: ['sentRequests'],
+      relations: ['sentRequests', 'friends'],
     });
     const receiver = await this.userRepository.findOne({
       where: { id: receiverId },
@@ -54,6 +55,11 @@ export class UsersService {
 
     if (sender.sentRequests.some((user) => user.id === receiverId)) {
       throw new BadRequestException(ERROR_MESSAGES.REQUEST_ALREADY_SENT);
+    }
+
+    //  Check if they are already friends
+    if (sender.friends.some((friend) => friend.id === receiverId)) {
+      throw new ConflictException(ERROR_MESSAGES.ALREADY_FRIEND);
     }
 
     sender.sentRequests.push(receiver);
@@ -114,7 +120,7 @@ export class UsersService {
   async declineFriendRequest(userId: number, senderId: number) {
     const user = await this.userRepository.findOne({
       where: { id: userId },
-      relations: ['receivedRequests', 'sentRequests'],
+      relations: ['receivedRequests'],
     });
     const sender = await this.userRepository.findOne({
       where: { id: senderId },
@@ -127,11 +133,16 @@ export class UsersService {
       throw new NotFoundException(ERROR_MESSAGES.REQUEST_NOT_FOUND);
     }
 
+    // Remove request from pending lists
     user.receivedRequests = user.receivedRequests.filter(
       (req) => req.id !== senderId,
     );
-    sender.sentRequests = sender.sentRequests.filter((req) => req.id !== userId);
+    sender.sentRequests = sender.sentRequests.filter(
+      (req) => req.id !== userId,
+    );
+
     await this.userRepository.save(user);
+    await this.userRepository.save(sender);
 
     return { message: RESPONSE_MESSAGES.REQUEST_DECLINED };
   }
@@ -141,7 +152,7 @@ export class UsersService {
       where: { id: userId },
       relations: ['friends'],
     });
-    if (!user) throw new NotFoundException('User not found.');
+    if (!user) throw new NotFoundException(ERROR_MESSAGES.USER_NOT_FOUND);
 
     return user.friends;
   }
